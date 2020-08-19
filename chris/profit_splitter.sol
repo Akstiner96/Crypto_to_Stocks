@@ -10,11 +10,11 @@ contract TeamProfitSplitter {
     address payable Chris;
     address payable Gabe;
 
-    constructor(address payable _one, address payable _two, address payable _three, address payable four) public {
+    constructor(address payable _one, address payable _two, address payable _three, address payable _four) public {
         Andrew = _one;
         Alan = _two;
         Chris = _three;
-        Gabe = _three;
+        Gabe = _four;
     }
 
     function balance() public view returns(uint) {
