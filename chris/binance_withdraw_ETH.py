@@ -1,16 +1,20 @@
-#This will withdraw from binance
-#Variables still need to be filled in the url
+# Withdraw Ether from Binance and send to address
 
 import requests
 
-url = "https://testnet.binance.vision/wapi/v3/withdraw.html?asset=&withdrawOrderId=&network=&address=&addressTag=&amount=&transactionFeeFlag=&name=&timestamp=1597796428553&signature=b861169fb612ccc278ead4f8b3c16b8a80f0df7b54e66bb24fe08af0ae3dfc12"
+def withdraw():
 
-payload = {}
-headers = {
-  'Content-Type': 'application/json',
-  'X-MBX-APIKEY': 'IfBnaRxLujIJRXGkIgNq2z3g1F8QC9kA59sJ6xRPObURqdCE5jdGDpp8kFv72YcU'
-}
+  url = "https://testnet.binance.vision/wapi/v3/withdraw.html?asset=ETH&address=0x2326D3E915DC4249dD8bD904F02dBE391056f03D&amount=10&timestamp=1597802688956&signature=670269ee2e2782f5f241273f2bddc9cea16576b0b616933670ddf299213c37ca"
 
-response = requests.request("POST", url, headers=headers, data = payload)
+  payload = {}
+  headers = {
+    'Content-Type': 'application/json',
+    'X-MBX-APIKEY': 'IfBnaRxLujIJRXGkIgNq2z3g1F8QC9kA59sJ6xRPObURqdCE5jdGDpp8kFv72YcU'
+  }
 
-print(response.text.encode('utf8'))
+  response = requests.request("POST", url, headers=headers, data = payload)
+
+  print(response.text.encode('utf8'))
+  return(response.text.encode('utf8'))
+
+withdraw()
