@@ -1,0 +1,12 @@
+Binance_spot_test_API_Key = IfBnaRxLujIJRXGkIgNq2z3g1F8QC9kA59sJ6xRPObURqdCE5jdGDpp8kFv72YcU
+Binance_spot_test_Secret_key = 3cYFkLWqKEDtOgBk31ClEJbSS0qJ7A1eRxtT9Udb8dOzcQpA3TGm99lnSEy4Vvjf
+
+test_user_number = 1597728828555279486
+
+https://academy.binance.com/economics/binance-api-series-pt-1-spot-trading-with-postman
+
+https://testnet.binance.vision/?utm_source=BinanceAcademy
+
+https://testnet.binance.vision/
+
+https://alpaca.markets/learn/stock-trading-bot-instruction/
