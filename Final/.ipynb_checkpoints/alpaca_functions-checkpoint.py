@@ -77,7 +77,7 @@ def transfer_profits_from_alpaca(bank_balance, beginning_deposit):
             print('Waiting...')
             time.sleep(1)
             bank_balance += withdraw_from_alpaca_amount
-            print(f"Your transfer of profits from alpaca was successful. Your new bank balance is ${bank_balance}")
+            print(f"Your withdrawal from alpaca was successful. Your new bank balance is ${bank_balance}")
     
     else:
         print("There are no profits to withdraw")

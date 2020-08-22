@@ -57,6 +57,6 @@ def data_clean(data):
     #data.columns = ['Ford Open','Ford Close','Ford Volume','Apple Open','Apple Close','Apple Volume']
     return data
 
-api = load()
-data = data_pull(api)
-cleaned = data_clean(data)
+# api = load()
+# data = data_pull(api)
+# cleaned = data_clean(data)
