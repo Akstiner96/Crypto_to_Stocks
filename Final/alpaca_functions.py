@@ -87,8 +87,8 @@ def transfer_from_alpaca(withdraw_from_alpaca_amount, beginning_deposit):
     print('Total market value is ${account.portfolio_value}.')
     
     if withdraw_from_alpaca_amount <= account.portfolio_value:
-         bank_balance += withdraw_from_alpaca_amount
-    print(f"Your withdrawal was successful. Your new bank balance is ${bank_balance})
+        bank_balance += withdraw_from_alpaca_amount
+        print(f"Your withdrawal was successful. Your new bank balance is ${bank_balance}")
         
     else:
         print("You do not have enough funds to withdraw that amount.")
@@ -124,7 +124,7 @@ def buy(symbol):
         type='market',
         time_in_force='gtc'
     )
-    print(f"You sent an order to buy {qty} shares of {symbol} to alpaca.)
+    print(f"You sent an order to buy {qty} shares of {symbol} to alpaca.")
           
 buy("SPY")
 
@@ -142,21 +142,21 @@ def sell_all(symbol):
         type='market',
         time_in_force='gtc'
     )
-    print(f"You sent an order to sell {qty} shares of {symbol} to alpaca.)
+    print(f"You sent an order to sell {qty} shares of {symbol} to alpaca.")
     
     
 
-'''''
-Useful commands:
+    '''''
+    Useful commands:
 
-api.get_account().cash
-api.get_asset('SPY')
-api.list_positions()
-account = api.get_account().cash
-account.status
-account.portfolio_value
-api.list_orders()
-api.get_position("SPY")
-api.get_position("SPY").qty
+    api.get_account().cash
+    api.get_asset('SPY')
+    api.list_positions()
+    account = api.get_account().cash
+    account.status
+    account.portfolio_value
+    api.list_orders()
+    api.get_position("SPY")
+    api.get_position("SPY").qty
 
-''''
+    '''''
