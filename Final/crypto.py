@@ -48,7 +48,7 @@ def get_symbols():
 
   response = requests.request("GET", url, headers=headers, data = payload)
 
- 
+  print(response.text.encode('utf8'))
   return(response.text.encode('utf8'))
 
 
@@ -68,4 +68,22 @@ def withdraw():
 
   print(response.text.encode('utf8'))
   return(response.text.encode('utf8'))
+
+def transfer_profits_to_exchange(bank_balance, binance_balance):
+    ''' This function sends money to binance and calculates a new bank balance.   
+        In reality this would be an ACH transfer or manual credit card entry. '''
+
+    initial_deposit = 100000
+    profit = bank_balance - initial_deposit
+    if profit > 0:
+        bank_balance -= profit
+        binance_balance += profit
+        print()
+        print(f"Transfer to Binance successful. Your binance_balance is now {binance_balance}.") 
+        print(f"Your bank balance is now {bank_balance}.")
+                           
+    else:
+        print("Transfer not completed to Binance. There are no profits to transfer")
+        
+    return bank_balance
 
