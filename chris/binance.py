@@ -1,4 +1,12 @@
+#Draft version, final version is in final folder
+
 import requests
+
+t = datetime.datetime.now()
+unix_secs = mktime(t.timetuple())
+timestamp = unix_secs*1000
+timestamp = int(timestamp)
+timestamp = str(timestamp)
 
 def get_account_holdings():
   '''This will get account holdings and other account info from binance'''

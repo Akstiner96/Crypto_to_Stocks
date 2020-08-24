@@ -11,11 +11,7 @@ def get_account_holdings():
     '''This will get account holdings and other account info from binance'''
     
     #Get timestamp in milliseconds 
-    t = datetime.datetime.now()
-    unix_secs = mktime(t.timetuple())
-    timestamp = unix_secs*1000
-    timestamp = int(timestamp)
-    timestamp = str(timestamp)
+    timestamp = str(time.time())*1000
     
     #separate query string from url
 #     query string = 'timestamp =' +timestamp+ '&'
@@ -47,22 +43,18 @@ def buy_ETH():
     '''Buy request for binance api, this will buy Ether'''
     
     #Get timestamp in milliseconds 
+    timestamp = str(time.time())*1000
    
-    t = datetime.datetime.now()
-    unix_secs = mktime(t.timetuple())
-    timestamp = unix_secs*1000
-    timestamp = int(timestamp)
-    timestamp = str(timestamp)
   
     #separate parameters from url
-    query_string = "symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=%s(timestamp)" 
+    query_string = f"symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=%s{timestamp}" 
 
     #use secret key and query string to create signature
     secret = 'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
 
     signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
    
-    url = "https://testnet.binance.vision/api/v3/order?symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=%s&signature=%s" %(timestamp,signature)
+    url = f"https://testnet.binance.vision/api/v3/order?symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp={timestamp}&signature={signature}" 
 
     payload = {}
     headers = {
@@ -96,18 +88,20 @@ def get_symbols():
 def withdraw():
   '''Withdraw Ether from Binance and send to address'''
   
-  url = "https://testnet.binance.vision/wapi/v3/withdraw.html?asset=ETH&address=0x2326D3E915DC4249dD8bD904F02dBE391056f03D&amount=10&timestamp=1597802688956&signature=670269ee2e2782f5f241273f2bddc9cea16576b0b616933670ddf299213c37ca"
+    timestamp = str(time.time())*1000
+    url = "https://testnet.binance.vision/wapi/v3/withdraw.html?      asset=ETH&address=0x2326D3E915DC4249dD8bD904F02dBE391056f03D&amount=10&timestamp=1597802688956&signature=670269ee2e2782f5f241273f2bddc9cea16576b0b616933670ddf299213c37ca"
 
-  payload = {}
-  headers = {
+    payload = {}
+    headers = {
     'Content-Type': 'application/json',
     'X-MBX-APIKEY': 'IfBnaRxLujIJRXGkIgNq2z3g1F8QC9kA59sJ6xRPObURqdCE5jdGDpp8kFv72YcU'
   }
 
-  response = requests.request("POST", url, headers=headers, data = payload)
+    response = requests.request("POST", url, headers=headers, data = payload)
 
-  print(response.text.encode('utf8'))
-  return(response.text.encode('utf8'))
+    print(response.text.encode('utf8'))
+    
+    return(response.text.encode('utf8'))
 
 
 def transfer_profits_to_exchange(bank_balance, binance_balance):
@@ -192,7 +186,7 @@ def check_recent_trades():
     print(response.text.encode('utf8'))
     return (response.text.encode('utf8'))
 
-def create_signature()
+def create_signature():
 
     t = datetime.datetime.now()
     unix_secs = mktime(t.timetuple())
