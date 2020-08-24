@@ -1,29 +1,68 @@
 import requests
 import json
-from datetime import datetime
+import datetime
+from datetime import date
 from time import mktime
+import hmac
+import hashlib
+
 
 def get_account_holdings():
-  '''This will get account holdings and other account info from binance'''
-  
-  url = "https://testnet.binance.vision/api/v3/account?timestamp=1597799212569&signature=9007daefe7784e05afb3144b41e0cccff3f2a19bdb64608fb671768636475ba4"
+    '''This will get account holdings and other account info from binance'''
+    
+    #Get timestamp in milliseconds 
+    t = datetime.datetime.now()
+    unix_secs = mktime(t.timetuple())
+    timestamp = unix_secs*1000
+    timestamp = int(timestamp)
+    timestamp = str(timestamp)
+    
+    #separate query string from url
+#     query string = 'timestamp =' +timestamp+ '&'
+    
+    #use secret key and query string to create signature
+#     secret = 'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
 
-  payload = {}
-  headers = {
+#     signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
+#     query string = 'timestamp =' +timestamp+ 
+    
+#     url = "https://testnet.binance.vision/api/v3/account?timestamp=" +timestamp+ "&signature ="+signature+"
+    
+    url = "https://testnet.binance.vision/api/v3/account?timestamp=%s&signature=9007daefe7784e05afb3144b41e0cccff3f2a19bdb64608fb671768636475ba4"%(timestamp)
+    
+    payload = {}
+    headers = {
     'Content-Type': 'application/json',
     'X-MBX-APIKEY': 'IfBnaRxLujIJRXGkIgNq2z3g1F8QC9kA59sJ6xRPObURqdCE5jdGDpp8kFv72YcU'
   }
 
-  response = requests.request("GET", url, headers=headers, data = payload)
+    response = requests.request("GET", url, headers=headers, data = payload)
 
-  print(response.text.encode('utf8'))
-  return (response.text.encode('utf8'))
+    print(response.text.encode('utf8'))
+    return (response.text.encode('utf8'))
 
 
 def buy_ETH():
     
     '''Buy request for binance api, this will buy Ether'''
-    url = "https://testnet.binance.vision/api/v3/order?symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp={{timestamp}}&signature=a5e5f4673925497b53671ec587a689011e94db03ea9f4354971419ef203871fc"
+    
+    #Get timestamp in milliseconds 
+   
+    t = datetime.datetime.now()
+    unix_secs = mktime(t.timetuple())
+    timestamp = unix_secs*1000
+    timestamp = int(timestamp)
+    timestamp = str(timestamp)
+  
+    #separate parameters from url
+    query_string = "symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=%s(timestamp)" 
+
+    #use secret key and query string to create signature
+    secret = 'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
+
+    signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
+   
+    url = "https://testnet.binance.vision/api/v3/order?symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=%s&signature=%s" %(timestamp,signature)
 
     payload = {}
     headers = {
@@ -35,6 +74,7 @@ def buy_ETH():
 
     print(response.text.encode('utf8'))
     return(response.text.encode('utf8'))
+
 
 def get_symbols():
   '''This will get all the symbols and a current price for crypto traded on binance'''
@@ -96,9 +136,6 @@ def transfer_profits_to_exchange(bank_balance, binance_balance):
 
 def get_eth_price():
     
-    from datetime import datetime
-from time import mktime
-    
     #use binance api to get all symbols and prices
     symbols = get_symbols()
     
@@ -154,3 +191,19 @@ def check_recent_trades():
 
     print(response.text.encode('utf8'))
     return (response.text.encode('utf8'))
+
+def create_signature()
+
+    t = datetime.datetime.now()
+    unix_secs = mktime(t.timetuple())
+    timestamp = unix_secs*1000
+    timestamp = int(timestamp)
+    timestamp = str(timestamp)
+    print(timestamp)
+
+    query_string = "symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=%s"(timestamp) 
+    secret = 'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
+
+    signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
+    
+    
