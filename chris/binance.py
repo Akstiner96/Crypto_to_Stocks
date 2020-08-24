@@ -17,9 +17,10 @@ def get_account_holdings():
   return (response.text.encode('utf8'))
 
 
-
-def buy_ETH():
+qty = 10
+def buy_ETH(qty):
   '''Buy request for binance api, this will buy Ether'''
+
 
   url = "https://testnet.binance.vision/api/v3/order?symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=1597796428553&signature=b861169fb612ccc278ead4f8b3c16b8a80f0df7b54e66bb24fe08af0ae3dfc12"
 
@@ -69,3 +70,17 @@ def withdraw():
   print(response.text.encode('utf8'))
   return(response.text.encode('utf8'))
 
+def get_eth_price():
+    #use binance api to get all symbols and prices
+    symbols = get_symbols()
+    
+    #convert bytes object to string
+    symbols = symbols.decode("utf-8") 
+    
+    #convert str to json
+    symbols = json.loads(symbols)
+    
+    #get eth price
+    eth_price = symbols[2]['price']  
+    
+    return eth_price
