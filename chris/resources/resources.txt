@@ -1,5 +1,4 @@
-Binance_spot_test_API_Key = IfBnaRxLujIJRXGkIgNq2z3g1F8QC9kA59sJ6xRPObURqdCE5jdGDpp8kFv72YcU
-Binance_spot_test_Secret_key = 3cYFkLWqKEDtOgBk31ClEJbSS0qJ7A1eRxtT9Udb8dOzcQpA3TGm99lnSEy4Vvjf
+Binance
 
 test_user_number = 1597728828555279486
 
@@ -21,8 +20,8 @@ wss://stream.binance.com:9443/stream	wss://testnet.binance.vision/stream
 
 https://testnet.binance.vision/
 
-NEW KEYS
-
+NEW KEYS FOR BINANCE SPOT TESTNET:
+ 
 API Key: ehalnzjFpYi1lIdsGu4236ddOMMypbAyqjMH3FS7XkYNagISeZQGtiyne9hcmrhz
 
 Secret Key: OaMImZjZCv5JHDqRIyaJjYEvhBPdGhUlsKVWN613gPdBMIdFjdnoF4tB98O16BMY

@@ -49,8 +49,9 @@ def transfer_profits_from_alpaca(bank_balance, beginning_deposit):
         In reality this would be an ACH transfer too. If there are no profits no transfer takes place.''' 
     
     #Set amount to withdraw to zero and check our cash
-    withdraw_from_alpaca_amount = 0
-    cash = api.get_account.cash()
+    withdraw_from_alpaca_amount = int(0)
+    account = api.get_account()
+    cash = float(account.cash)
     
     #calculate how much profit we have. Withdraw that amount from alpaca to our bank.
     if float(account.portfolio_value) > beginning_deposit:
@@ -58,13 +59,13 @@ def transfer_profits_from_alpaca(bank_balance, beginning_deposit):
         withdraw_from_alpaca_amount += (float(account.portfolio_value) - beginning_deposit)
         
         #check to see if we have enough cash to withdraw the profit.
-        if cash > withdraw_from_alpaca_amount:
+        if float(cash) > float(withdraw_from_alpaca_amount):
             bank_balance += withdraw_from_alpaca_amount
             print(f"Your withdrawal from alpaca was successful. Your new bank balance is ${bank_balance}")
         
         #if we are fully invested with no cash then we need to sell stock equal to the amount of profit
         else:
-            qty = withdraw_from_alpaca_amount/api.get_position('SPY').price
+            qty = int(withdraw_from_alpaca_amount/float(api.get_position('SPY').current_price))
             
             api.submit_order(
                 symbol= symbol,
@@ -94,6 +95,7 @@ def transfer_from_alpaca(withdraw_from_alpaca_amount, bank_balance, beginning_de
     
     if withdraw_from_alpaca_amount <= account.portfolio_value:
         bank_balance += withdraw_from_alpaca_amount
+        
         print(f"Your withdrawal was successful. Your new bank balance is ${bank_balance}")
         
     else:
@@ -118,7 +120,7 @@ def buy(symbol):
     cash = float(api.get_account().cash) 
     
     #hard coded price, have not figured out how to get price quote
-    price = 338.30
+    price = 343.30
     
     qty = int(cash/price)
     
