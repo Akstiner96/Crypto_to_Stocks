@@ -14,12 +14,11 @@ def get_account_holdings():
     timestamp = str(time.time())*1000
     
     #separate query string from url
-#     query string = 'timestamp =' +timestamp+ '&'
+    query string = 
     
     #use secret key and query string to create signature
-#     secret = 'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
-
-#     signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
+    secret = 'OaMImZjZCv5JHDqRIyaJjYEvhBPdGhUlsKVWN613gPdBMIdFjdnoF4tB98O16BMY' 
+    signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
 #     query string = 'timestamp =' +timestamp+ 
     
 #     url = "https://testnet.binance.vision/api/v3/account?timestamp=" +timestamp+ "&signature ="+signature+"
@@ -29,7 +28,7 @@ def get_account_holdings():
     payload = {}
     headers = {
     'Content-Type': 'application/json',
-    'X-MBX-APIKEY': 'IfBnaRxLujIJRXGkIgNq2z3g1F8QC9kA59sJ6xRPObURqdCE5jdGDpp8kFv72YcU'
+    'X-MBX-APIKEY': 'ehalnzjFpYi1lIdsGu4236ddOMMypbAyqjMH3FS7XkYNagISeZQGtiyne9hcmrhz'
   }
 
     response = requests.request("GET", url, headers=headers, data = payload)
@@ -50,7 +49,8 @@ def buy_ETH():
     query_string = f"symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=%s{timestamp}" 
 
     #use secret key and query string to create signature
-    secret = 'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
+  
+    secret = 'OaMImZjZCv5JHDqRIyaJjYEvhBPdGhUlsKVWN613gPdBMIdFjdnoF4tB98O16BMY'
 
     signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
    
@@ -59,7 +59,7 @@ def buy_ETH():
     payload = {}
     headers = {
       'Content-Type': 'application/json',
-      'X-MBX-APIKEY': 'IfBnaRxLujIJRXGkIgNq2z3g1F8QC9kA59sJ6xRPObURqdCE5jdGDpp8kFv72YcU'
+      'X-MBX-APIKEY': 'ehalnzjFpYi1lIdsGu4236ddOMMypbAyqjMH3FS7XkYNagISeZQGtiyne9hcmrhz'
     }
 
     response = requests.request("POST", url, headers=headers, data = payload)
@@ -86,7 +86,7 @@ def get_symbols():
 
 
 def withdraw():
-  '''Withdraw Ether from Binance and send to address'''
+    '''Withdraw Ether from Binance and send to address'''
   
     timestamp = str(time.time())*1000
     url = "https://testnet.binance.vision/wapi/v3/withdraw.html?      asset=ETH&address=0x2326D3E915DC4249dD8bD904F02dBE391056f03D&amount=10&timestamp=1597802688956&signature=670269ee2e2782f5f241273f2bddc9cea16576b0b616933670ddf299213c37ca"

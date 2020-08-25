@@ -10,3 +10,19 @@ https://testnet.binance.vision/?utm_source=BinanceAcademy
 https://testnet.binance.vision/
 
 https://alpaca.markets/learn/stock-trading-bot-instruction/
+
+https://binance-docs.github.io/apidocs/spot/en/#spot-testnet
+
+
+Spot API URL	Spot Test Network URL
+https://api.binance.com/api	https://testnet.binance.vision/api
+wss://stream.binance.com:9443/ws	wss://testnet.binance.vision/ws
+wss://stream.binance.com:9443/stream	wss://testnet.binance.vision/stream
+
+https://testnet.binance.vision/
+
+NEW KEYS
+
+API Key: ehalnzjFpYi1lIdsGu4236ddOMMypbAyqjMH3FS7XkYNagISeZQGtiyne9hcmrhz
+
+Secret Key: OaMImZjZCv5JHDqRIyaJjYEvhBPdGhUlsKVWN613gPdBMIdFjdnoF4tB98O16BMY
