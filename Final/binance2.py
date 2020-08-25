@@ -5,25 +5,24 @@ from datetime import date
 from time import mktime
 import hmac
 import hashlib
-
+import time
+import urllib3
+import urllib.request
 
 def get_account_holdings():
     '''This will get account holdings and other account info from binance'''
     
     #Get timestamp in milliseconds 
-    timestamp = str(time.time())*1000
+    timestamp = int(time.time())*1000
     
     #separate query string from url
-    query string = 
+    query_string = f"timestamp={timestamp}"
     
     #use secret key and query string to create signature
     secret = 'OaMImZjZCv5JHDqRIyaJjYEvhBPdGhUlsKVWN613gPdBMIdFjdnoF4tB98O16BMY' 
-    signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
-#     query string = 'timestamp =' +timestamp+ 
+    signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest() 
     
-#     url = "https://testnet.binance.vision/api/v3/account?timestamp=" +timestamp+ "&signature ="+signature+"
-    
-    url = "https://testnet.binance.vision/api/v3/account?timestamp=%s&signature=9007daefe7784e05afb3144b41e0cccff3f2a19bdb64608fb671768636475ba4"%(timestamp)
+    url = f"https://testnet.binance.vision/api/v3/account?timestamp={timestamp}&signature={signature}"
     
     payload = {}
     headers = {
@@ -32,21 +31,18 @@ def get_account_holdings():
   }
 
     response = requests.request("GET", url, headers=headers, data = payload)
-
-    print(response.text.encode('utf8'))
     return (response.text.encode('utf8'))
 
 
-def buy_ETH():
+def buy_ETH(quantity):
     
     '''Buy request for binance api, this will buy Ether'''
     
     #Get timestamp in milliseconds 
-    timestamp = str(time.time())*1000
+    timestamp = int(time.time())*1000
    
-  
     #separate parameters from url
-    query_string = f"symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=%s{timestamp}" 
+    query_string = f"symbol=ETHBUSD&side=BUY&type=MARKET&quantity={quantity}&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp={timestamp}" 
 
     #use secret key and query string to create signature
   
@@ -54,7 +50,7 @@ def buy_ETH():
 
     signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
    
-    url = f"https://testnet.binance.vision/api/v3/order?symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp={timestamp}&signature={signature}" 
+    url = f"https://testnet.binance.vision/api/v3/order?symbol=ETHBUSD&side=BUY&type=MARKET&quantity={quantity}&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp={timestamp}&signature={signature}" 
 
     payload = {}
     headers = {
@@ -84,12 +80,19 @@ def get_symbols():
   return(response.text.encode('utf8'))
 
 
-
-def withdraw():
+def withdraw(quantity):
     '''Withdraw Ether from Binance and send to address'''
+    '''Because this is a testnet this function will not work. It should work on the live binance api'''
   
-    timestamp = str(time.time())*1000
-    url = "https://testnet.binance.vision/wapi/v3/withdraw.html?      asset=ETH&address=0x2326D3E915DC4249dD8bD904F02dBE391056f03D&amount=10&timestamp=1597802688956&signature=670269ee2e2782f5f241273f2bddc9cea16576b0b616933670ddf299213c37ca"
+    timestamp = int(time.time())*1000
+    
+    query_string = "asset=ETH&address=0x2326D3E915DC4249dD8bD904F02dBE391056f03D&amount={quantity}&timestamp={timestamp}"
+    
+    secret = 'OaMImZjZCv5JHDqRIyaJjYEvhBPdGhUlsKVWN613gPdBMIdFjdnoF4tB98O16BMY'
+    
+    signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
+    
+    url = "https://testnet.binance.vision/wapi/v3/withdraw.html?asset=ETH&address=0x2326D3E915DC4249dD8bD904F02dBE391056f03D&amount={quantity}&timestamp={timestamp}&signature={signature}"
 
     payload = {}
     headers = {
@@ -108,14 +111,14 @@ def transfer_profits_to_exchange(bank_balance, binance_balance):
     ''' This function sends money to binance and calculates a new bank balance and new binance balance.  
         In reality this would be an ACH transfer or manual credit card entry. '''
 
-    initial_deposit = 100000
-    profit = bank_balance - initial_deposit
+    profits_to_transfer = bank_balance
+    
     balances = []
-    if profit > 0:
-        bank_balance = bank_balance - profit
+    if bank_balance > 0:
+        bank_balance = 0
         balances.append(bank_balance)
         
-        binance_balance = binance_balance + profit
+        binance_balance = profits_to_transfer
         balances.append(binance_balance)
         print()
         print(f"Transfer to Binance successful. Your binance_balance is now {binance_balance}.") 
@@ -174,6 +177,7 @@ def test_connectivity():
     return (response.text.encode('utf8'))
 
 def check_recent_trades():
+    
     url = "https://testnet.binance.vision/api/v3/trades?symbol=ETHBUSD&limit=500"
 
     payload = {}
@@ -183,21 +187,7 @@ def check_recent_trades():
 
     response = requests.request("GET", url, headers=headers, data = payload)
 
-    print(response.text.encode('utf8'))
+    #print(response.text.encode('utf8'))
     return (response.text.encode('utf8'))
 
-def create_signature():
 
-    t = datetime.datetime.now()
-    unix_secs = mktime(t.timetuple())
-    timestamp = unix_secs*1000
-    timestamp = int(timestamp)
-    timestamp = str(timestamp)
-    print(timestamp)
-
-    query_string = "symbol=ETHBUSD&side=BUY&type=MARKET&quantity=1&newClientOrderId=my_order_id_1&newOrderRespType=ACK&timestamp=%s"(timestamp) 
-    secret = 'NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j'
-
-    signature = hmac.new(secret.encode('utf-8'), query_string.encode('utf-8'), hashlib.sha256).hexdigest()
-    
-    
